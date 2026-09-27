@@ -8,6 +8,9 @@ library(ggthemes)
 options(scipen=999)
 theme_set(theme_bw())
 
+# Helper function to convert underscores to spaces
+us_to_space <- function(x) gsub("_", " ", x)
+
 # You can set your Mapbox token via environment variable or replace the placeholder below
 Sys.setenv('MAPBOX_TOKEN' = Sys.getenv('MAPBOX_TOKEN', 'YOUR_MAPBOX_TOKEN_HERE'))
 
@@ -38,7 +41,7 @@ shinyServer(function(input, output) {
  # Age-Group Worldwide
  rates_age_worldwide <- reactive({
  rates_age_worldwide_f <- rates_grouped_by_age
- if (input$world_age_age != "All") {
+ if (!"All" %in% input$world_age_age) {
  rates_age_worldwide_f <- rates_age_worldwide_f %>%
  filter(age_group %in% input$world_age_age)
  }
@@ -48,7 +51,7 @@ shinyServer(function(input, output) {
  # Age-Group Country
  rates_age_country <- reactive({
  rates_age_country_f <- rates_map_age
- if (input$country_age_age != "All") {
+ if (!"All" %in% input$country_age_age) {
  rates_age_country_f <- rates_age_country_f %>%
  filter(age_group %in% input$country_age_age)
  }
