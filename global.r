@@ -1,8 +1,10 @@
 library(tidyverse)
 library(tidyr)
 library(rjson)
-library(reshape2)
 library(dplyr)
+
+# Helper function to convert underscores to spaces
+us_to_space <- function(x) gsub("_", " ", x)
 
 #Data preparation - Suicide rates
 rates <- read_csv("WHOMortalityDatabase_Deaths_sex_age_a_country_area_year-Self-inflicted injuries_8th August 2022 04_11.csv") %>%
