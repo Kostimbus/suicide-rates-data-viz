@@ -53,7 +53,8 @@ body <- dashboardBody(
  varSelectInput("map_z", "", data = column_names, selected = "death_rate_per_100k")),
  box(title = "Selection:", width = 6,
  selectInput("country_age_age", "Select Age Groups", choices = c("All", unique(rates_map_age$age_group)),
- selected = c("[15-19]", "[20-24]", "[25-29]"), multiple = TRUE))
+ selected = c("[15-19]", "[20-24]", "[25-29]"), multiple = TRUE,
+ options = list(plugins = list("remove_button"))))
  ),
  ## Row 2 ##
  fluidRow(
@@ -83,7 +84,8 @@ body <- dashboardBody(
  varSelectInput("world_age_y", "Select Y-Axis", data = column_names, selected = "death_rate_per_100k"))),
  (box(title = "Selection:", width = 6,
  selectInput("world_age_age", "Select Age Groups", choices = c("All", unique(rates_grouped_by_age$age_group)),
- selected = c("[15-19]", "[20-24]", "[25-29]"), multiple = TRUE)))),
+ selected = c("[15-19]", "[20-24]", "[25-29]"), multiple = TRUE,
+ options = list(plugins = list("remove_button")))))),
  fluidRow(box(title = "", width = 12, plotlyOutput("worldwide_age_line_chart"))))))),
  
  tabItem(tabName = "data",
