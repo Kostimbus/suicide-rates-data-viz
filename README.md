@@ -1,5 +1,7 @@
 # Global Socioeconomic and Public Health Analysis
 
+![Banner](assets/thumbnail.jpg)
+
 This project explores a complex and critical public health issue by analyzing the relationship between socioeconomic indicators (like the Human Development Index and GDP) and specific critical mortality rates on a global scale. It features an interactive web application built with R and Shiny.
 
 ## 🎯 Project Goal
