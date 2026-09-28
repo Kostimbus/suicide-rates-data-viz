@@ -8,8 +8,8 @@ library(ggthemes)
 options(scipen=999)
 theme_set(theme_bw())
 
-# Helper function to convert underscores to spaces
-us_to_space <- function(x) gsub("_", " ", x)
+# Helper function to convert underscores to spaces safely
+us_to_space <- function(x) gsub("_", " ", as.character(x))
 
 # You can set your Mapbox token via environment variable or replace the placeholder below
 Sys.setenv('MAPBOX_TOKEN' = Sys.getenv('MAPBOX_TOKEN', 'YOUR_MAPBOX_TOKEN_HERE'))
@@ -138,7 +138,7 @@ shinyServer(function(input, output) {
  geojson = world,
  featureidkey = "properties.admin",
  locations = rates_grouped_by_years$country_name,
- z = rates_grouped_by_years[[input$map_z]],
+ z = rates_grouped_by_years[[as.character(input$map_z)]],
  colorscale = "Viridis"
  )
  })
@@ -160,7 +160,7 @@ shinyServer(function(input, output) {
  labs(
  title = str_c("By Gender, ", country),
  x = "Year",
- y = toupper(us_to_space(str_c(input$map_z))),
+ y = toupper(us_to_space(input$map_z)),
  color = "Gender",
  size = ""
  )
@@ -185,7 +185,7 @@ shinyServer(function(input, output) {
  labs(
  title = str_c("By Age Group, ", country),
  x = "Year",
- y = toupper(us_to_space(str_c(input$map_z))),
+ y = toupper(us_to_space(input$map_z)),
  color = "Age Group",
  size = ""
  )
@@ -198,13 +198,13 @@ shinyServer(function(input, output) {
  p <- ggplot(data = rates_grouped_by_sex) +
  geom_line(mapping = aes(x = year, y = !!input$world_sex_y, color = sex)) +
  geom_point(mapping = aes(x = year, y = !!input$world_sex_y, color = sex, size = 0.5,
- text = str_c(toupper(us_to_space(str_c(input$world_sex_y))), format(round(!!input$world_sex_y, 2), nsmall = 2), "\nYear: ", year))) +
+ text = str_c(toupper(us_to_space(input$world_sex_y)), ": ", format(round(!!input$world_sex_y, 2), nsmall = 2), "\nYear: ", year))) +
  scale_x_continuous() +
  theme(legend.position = "top") +
  labs(
  title = "By Gender, Worldwide ",
  x = "Year",
- y = toupper(us_to_space(str_c(input$world_sex_y))),
+ y = toupper(us_to_space(input$world_sex_y)),
  color = "Gender",
  size = ""
  )
@@ -217,13 +217,13 @@ shinyServer(function(input, output) {
  p <- ggplot(data = rates_age_worldwide()) +
  geom_line(mapping = aes(x = year, y = !!input$world_age_y, color = age_group)) +
  geom_point(mapping = aes(x = year, y = !!input$world_age_y, color = age_group, size = 0.1,
- text = str_c(toupper(us_to_space(str_c(input$world_age_y))), format(round(!!input$world_age_y, 2), nsmall = 2), "\nYear: ", year))) +
+ text = str_c(toupper(us_to_space(input$world_age_y)), ": ", format(round(!!input$world_age_y, 2), nsmall = 2), "\nYear: ", year))) +
  scale_x_continuous() +
  theme(legend.position = "top") +
  labs(
  title = "By Age Group, Worldwide ",
  x = "Year",
- y = toupper(us_to_space(str_c(input$world_age_y))),
+ y = toupper(us_to_space(input$world_age_y)),
  color = "Age Group",
  size = ""
  )
